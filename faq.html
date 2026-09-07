@@ -1,0 +1,61 @@
+<!-- Pastikan file ini disimpan dengan nama faq.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bantuan - PT. Sinergi Cendekia Investama</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-container { margin-top: 150px; padding-bottom: 80px; }
+        .faq-item { background: white; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
+        .faq-question { padding: 20px; font-weight: bold; color: var(--primary-color); display: flex; justify-content: space-between; }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: 0.3s ease; color: #666; line-height: 1.6; }
+        .faq-item.active .faq-answer { padding-bottom: 20px; max-height: 200px; border-top: 1px solid #eee; padding-top: 15px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo logo-wrapper">
+                    <div class="logo-icon">P</div>
+                    <div>PT. <span>Sinergi Cendekia Investama</span></div>
+                </a>
+                <div class="menu">
+                    <a href="index.html">Beranda</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="faq.html" class="active">Bantuan</a>
+                    <a href="login.html">Masuk</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container faq-container animate-fade">
+        <h2 class="section-title">Pusat Bantuan</h2>
+        <p class="section-subtitle">Pertanyaan yang paling sering diajukan seputar sertifikasi.</p>
+
+        <div class="faq-item">
+            <div class="faq-question">Bagaimana cara verifikasi sertifikat? <span>+</span></div>
+            <div class="faq-answer">Gunakan fitur pencarian di halaman Beranda dengan memasukkan nomor sertifikat resmi Anda untuk melihat status validitas.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apakah ujian bisa dilakukan secara online? <span>+</span></div>
+            <div class="faq-answer">Ya, kami menyediakan platform Computer Based Test (CBT) untuk ujian teori yang dapat diakses dari mana saja.</div>
+        </div>
+    </div>
+
+    <footer><div class="container">&copy; 2026 PT. Sinergi Cendekia Investama.</div></footer>
+
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+                let icon = item.querySelector('span');
+                icon.innerText = item.classList.contains('active') ? "-" : "+";
+            });
+        });
+    </script>
+</body>
+</html>

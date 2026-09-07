@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Akun - PT. Sinergi Cendekia Investama</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .register-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f0f2f5; padding-top: 80px; }
+        .form-wrapper { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo logo-wrapper">
+                    <div class="logo-icon">P</div>
+                    <div>PT. <span>Sinergi Cendekia Investama</span></div>
+                </a>
+                <div class="menu">
+                    <a href="index.html">Beranda</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="faq.html">Bantuan</a>
+                    <a href="login.html">Masuk</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="register-section animate-fade">
+        <div class="form-wrapper">
+            <h2 style="text-align: center; margin-bottom: 10px; color: var(--primary-color);">Daftar Akun Baru</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 14px;">Mulai langkah sertifikasi kompetensi Anda di sini</p>
+            
+            <form onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama sesuai KTP" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat Email</label>
+                    <input type="email" id="email" placeholder="nama@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" id="pass1" placeholder="Minimal 8 karakter" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('pass1', this)">LIHAT</span>
+                </div>
+                <div class="form-group">
+                    <label>Konfirmasi Kata Sandi</label>
+                    <input type="password" id="pass2" placeholder="Ulangi kata sandi" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('pass2', this)">LIHAT</span>
+                </div>
+                <button type="submit" id="btnDaftar" class="btn" style="width: 100%; padding: 15px;">Buat Akun Peserta</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px; font-size: 14px;">
+                Sudah memiliki akun? <a href="login.html" style="color: var(--primary-color); font-weight: bold; text-decoration: none;">Login di sini</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function handleRegistration(event) {
+            event.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const email = document.getElementById('email').value;
+            const p1 = document.getElementById('pass1').value;
+            const p2 = document.getElementById('pass2').value;
+            const btn = document.getElementById('btnDaftar');
+
+            if(p1 !== p2) {
+                alert("Kesalahan: Kata sandi tidak cocok!");
+                return;
+            }
+
+            btn.innerHTML = "Menyimpan Data Akun...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // NYATA MEMBUAT DAN MENYIMPAN DATA KE MEMORI BROWSER
+                const dataUser = { nama: nama, email: email, password: p1, statusAdmin: "Perlu Unggah Berkas", nilaiTeori: "-", nilaiLab: "-", rekomendasi: "-" };
+                localStorage.setItem(email, JSON.stringify(dataUser));
+                localStorage.setItem("session_email", email); // Simpan sesi login aktif
+
+                alert("Akun Berhasil Dibuat & Tersimpan di Sistem Browser!\nSistem akan mengarahkan Anda langsung ke Dashboard.");
+                window.location.href = "dashboard.html";
+            }, 1200);
+        }
+        function togglePasswordVisibility(inputId, element) {
+            const passwordInput = document.getElementById(inputId);
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                element.innerText = "SEMBUNYI";
+                element.style.color = "var(--primary-color)";
+            } else {
+                passwordInput.type = "password";
+                element.innerText = "LIHAT";
+                element.style.color = "#666";
+            }
+        }
+    </script>
+</body>
+</html>

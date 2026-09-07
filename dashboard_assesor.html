@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Assesor - PT. Sinergi Cendekia Investama</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .assesor-container { margin-top: 120px; padding-bottom: 60px; }
+        .dashboard-card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 25px; }
+        .action-btn { background: #0d6efd; color: white; padding: 6px 12px; border-radius: 4px; border: none; font-weight: bold; cursor: pointer; }
+        .input-box { width: 80px; padding: 6px; border: 1px solid #ddd; border-radius: 4px; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo logo-wrapper">
+                    <div class="logo-icon">P</div>
+                    <div>PT. <span>Sinergi Cendekia Investama</span></div>
+                </a>
+                <div class="menu">
+                    <span style="font-weight: bold; color: var(--primary-color); margin-right: 15px;">Dosen Penguji / Assesor</span>
+                    <a href="login.html" onclick="localStorage.removeItem('session_email')" style="color: red; font-weight: bold; text-decoration: none;">Keluar</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container assesor-container animate-fade">
+        <div class="dashboard-card">
+            <h2>Evaluasi Nyata Data Peserta (Dari Memori Browser)</h2>
+            <p style="color: #666; margin-bottom: 20px;">Berikut adalah daftar akun peserta yang terdeteksi mendaftar di komputer/browser ini. Anda bisa langsung menguji lab dan memberikan nilai di sini.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nama Peserta</th>
+                            <th>Email</th>
+                            <th>Nilai Teori</th>
+                            <th>Nilai Lab</th>
+                            <th>Rekomendasi</th>
+                            <th>Aksi Operasi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelDataPeserta">
+                        <!-- Data akan dimasukkan secara dinamis oleh JavaScript di bawah -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Proteksi Halaman
+        if(localStorage.getItem("session_email") !== "assesor_active") {
+            window.location.href = "login.html";
+        }
+
+        const tbody = document.getElementById('tabelDataPeserta');
+        let dataDitemukan = false;
+
+        // Loop seluruh memori localStorage untuk mencari data akun peserta
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            
+            // Lewati data session bawan sistem
+            if(key === "session_email" || key === "assesor_active") continue;
+
+            try {
+                const user = JSON.parse(localStorage.getItem(key));
+                if(user && user.nama && user.email) {
+                    dataDitemukan = true;
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${user.nama}</strong></td>
+                        <td>${user.email}</td>
+                        <td><input type="number" id="t_${user.email}" class="input-box" value="${user.nilaiTeori === '-' ? 80 : user.nilaiTeori}"></td>
+                        <td><input type="number" id="l_${user.email}" class="input-box" value="${user.nilaiLab === '-' ? 85 : user.nilaiLab}"></td>
+                        <td>
+                            <select id="r_${user.email}" style="padding:6px; border-radius:4px;">
+                                <option value="Kompeten" ${user.rekomendasi === 'Kompeten' ? 'selected' : ''}>Kompeten (K)</option>
+                                <option value="Belum Kompeten" ${user.rekomendasi === 'Belum Kompeten' ? 'selected' : ''}>Belum Kompeten (BK)</option>
+                            </select>
+                        </td>
+                        <td><button class="action-btn" onclick="simpanNilaiKeBrowser('${user.email}')">Simpan & Update</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            } catch(e) {
+                // Lewati jika data bukan format JSON akun
+            }
+        }
+
+        if(!dataDitemukan) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#999; padding:20px;">Belum ada akun peserta yang terdaftar di komputer ini. Silakan buat akun baru terlebih dahulu di halaman daftar.</td></tr>`;
+        }
+
+        function simpanNilaiKeBrowser(emailTarget) {
+            const userObj = JSON.parse(localStorage.getItem(emailTarget));
+            
+            // Ambil data inputan baru dari baris tabel
+            userObj.nilaiTeori = document.getElementById(`t_${emailTarget}`).value;
+            userObj.nilaiLab = document.getElementById(`l_${emailTarget}`).value;
+            userObj.rekomendasi = document.getElementById(`r_${emailTarget}`).value;
+            userObj.statusAdmin = "Sertifikat Terbit"; // Otomatis naik tingkat
+
+            // Tulis dan kunci kembali perubahan ke dalam memori browser
+            localStorage.setItem(emailTarget, JSON.stringify(userObj));
+            
+            alert(`Berhasil! Data nilai untuk peserta ${userObj.nama} telah resmi disimpan ke database browser secara permanen.`);
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+/* ==========================================================================
+   1. VARIABLES & RESET STYLE (Standar Profesional dengan CSS Variables)
+   ========================================================================== */
+:root {
+    --primary-color: #0f2c59;    /* Biru Universitas / Formal */
+    --secondary-color: #ffc107;  /* Emas / Aksen */
+    --text-dark: #333333;
+    --text-light: #666666;
+    --bg-light: #f4f6f9;
+    --white: #ffffff;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   2. REUSABLE COMPONENTS (Komponen yang bisa dipakai ulang di tiap halaman)
+   ========================================================================== */
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 50px;
+    font-size: 16px;
+}
+
+/* Tombol dengan Efek Mikro-Interaktif */
+.btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 14px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.2);
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background-color: #e0a800;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   3. HEADER & NAVIGATION
+   ========================================================================== */
+header {
+    background-color: var(--white);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--secondary-color);
+}
+
+.menu a {
+    text-decoration: none;
+    color: #555;
+    margin-left: 25px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: var(--transition);
+    position: relative;
+    padding-bottom: 5px;
+}
+
+/* Efek Animasi Garis Bawah saat Hover (Sangat disukai UI/UX Tester) */
+.menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.menu a:hover {
+    color: var(--primary-color);
+}
+
+.menu a:hover::after, .menu a.active::after {
+    width: 100%;
+}
+
+.menu a.active {
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   4. ANIMASI ENTRANCE (Efek Memudar Saat Halaman Dimuat)
+   ========================================================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* ==========================================================================
+   5. FOOTER STYLE
+   ========================================================================== */
+footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 4px solid var(--secondary-color);
+    margin-top: auto;
+}
+
+/* Efek Glassmorphism untuk Card */
+.card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+}
+
+/* Animasi Tombol Ripple & Lift */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+/* Animasi Muncul saat Scroll (Fade In Up) */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- RESPONSIVITAS HP & TABLET --- */
+@media (max-width: 768px) {
+    nav { flex-direction: column; gap: 15px; text-align: center; }
+    .menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .menu a { margin: 0 10px; font-size: 14px; }
+    .hero h1 { font-size: 28px; }
+    .card-container { flex-direction: column; }
+}
+
+/* --- ANIMASI & FEEDBACK VISUAL --- */
+.animate-pop { animation: popIn 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48); }
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Area Hasil Pencarian */
+.result-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #e7f3ff;
+    border-left: 5px solid var(--primary-color);
+    border-radius: 8px;
+    text-align: left;
+    display: none; /* Sembunyi dulu */
+}
+
+/* --- TOAST NOTIFICATION (Notifikasi Melayang Modern) --- */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 2000;
+    font-weight: 600;
+}
+
+/* --- FORM LAYOUT DI DASHBOARD --- */
+.dashboard-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-top: 25px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* --- KONTENER PENGURUNG PASSWORD (WAJIB DIUPDATE) --- */
+.password-container {
+    position: relative; /* Kunci utama context absolute elemen anak */
+    display: flex;      /* Pengaman ganda agar input dan tombol menyatu */
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- PAKSA INPUT PASSWORD AGAR MEMBERIKAN RUANG DI KANAN --- */
+.password-container input {
+    width: 100% !important; /* Paksa menguasai 100% lebar form */
+    padding: 12px !important;
+    padding-right: 85px !important; /* Ruang mutlak agar teks tidak menabrak tombol LIHAT */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* --- POSISI TOMBOL LIHAT DI DALAM KOTAK INPUT --- */
+.toggle-password {
+    position: absolute !important;
+    right: 15px !important; /* Jarak konstan dari dinding kanan dalam input */
+    top: 50% !important;
+    transform: translateY(-50%) !important; /* Pas di tengah secara vertikal */
+    cursor: pointer;
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    user-select: none;
+    z-index: 10; /* Berada di lapisan paling atas agar bisa diklik */
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: var(--primary-color);
+}
+
+/* --- LOGO PERUSAHAAN DENGAN IKON SIMULASI --- */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 3px 8px rgba(15, 44, 89, 0.3);
+}

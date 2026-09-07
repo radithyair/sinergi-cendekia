@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT. Sinergi Cendekia Investama - Beranda</title>
+    <!-- Menghubungkan ke file CSS Eksternal -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gaya spesifik khusus untuk elemen di halaman Beranda */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
+            color: var(--white);
+            padding: 200px 0 120px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .verification {
+            background-color: var(--white);
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 6px;
+            padding: 5px;
+            background: var(--white);
+            border: 1px solid #e0e0e0;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo logo-wrapper">
+                    <div class="logo-icon">P</div>
+                    <div>PT. <span>Sinergi Cendekia Investama</span></div>
+                </a>
+                <div class="menu">
+                    <a href="index.html" class="active">Beranda</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="faq.html">Bantuan</a>
+                    <a href="login.html">Masuk</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Utama dengan Kelas Animasi -->
+    <section class="hero">
+        <div class="container animate-fade">
+            <h1>Uji Kompetensi & Sertifikasi Keahlian Resmi</h1>
+            <p>Akselerasi karier profesional Anda bersama Yayasan Universitas Pancasila. Sistem ujian valid, transparan, dan diakui industri skala nasional.</p>
+            <a href="daftar.html" class="btn">Mulai Daftar Ujian</a>
+        </div>
+    </section>
+
+    <!-- Fitur Verifikasi Sertifikat -->
+    <section class="verification section-padding">
+        <div class="container">
+            <h2 class="section-title">Verifikasi Sertifikat Online</h2>
+            <p class="section-subtitle">Gunakan fitur pencarian ini untuk memeriksa keabsahan dokumen sertifikat yang diterbitkan.</p>
+            
+            <div class="search-box">
+                <input type="text" id="certNumber" placeholder="Masukkan nomor sertifikat (Contoh: UP-2026-001)">
+                <button type="button" class="btn" onclick="checkCertificate()">Cari Data</button>
+            </div>
+
+            <div id="resultArea" class="result-box"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 PT. Sinergi Cendekia Investama - Yayasan Universitas Pancasila. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Logika Front-End Profesional (Simulasi Validasi) -->
+    <script>
+        function checkCertificate() {
+            const input = document.getElementById('certNumber').value;
+            const btn = document.querySelector('.search-box .btn');
+            const resultBox = document.getElementById('resultArea');
+            
+            if(!input) {
+                alert("Mohon masukkan nomor sertifikat Anda.");
+                return;
+            }
+
+            // Simulasi Loading
+            btn.innerHTML = `<span class="loading-spinner"></span> Menghubungkan ke Pusat Data...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = "Cari Data";
+                btn.disabled = false;
+                
+                // Tampilkan Hasil di layar
+                resultBox.style.display = "block";
+                resultBox.className = "result-box animate-pop";
+                resultBox.innerHTML = `
+                    <h4 style="color: #0f2c59; margin-bottom: 10px;">Data Sertifikat Ditemukan:</h4>
+                    <p><strong>Nama Peserta:</strong> Radithya Iqbal Robbani</p>
+                    <p><strong>Skema:</strong> Junior Web Developer</p>
+                    <p><strong>Status:</strong> <span style="color: #28a745; font-weight: bold;">Terverifikasi BNSP</span></p>
+                    <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
+                    <small>Sertifikat ini diterbitkan secara sah oleh Yayasan Universitas Pancasila.</small>
+                `;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
